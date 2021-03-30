@@ -8,11 +8,18 @@
   <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
   <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
 
-  <title>Template App</title>
+  <title>Ebbin memo</title>
 </head>
 
 <body>
   <div id="root"></div>
+  <!-- This is from Secure Electron App -->
+  <!-- <script>
+    window.api.receive("fromMain", (data) => {
+      console.log(`Received ${data} from main process`);
+    });
+    window.api.send("toMain", "some data");
+  </script> -->
 </body>
 
 </html>
