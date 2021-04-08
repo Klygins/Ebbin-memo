@@ -12,3 +12,15 @@ export const removeMemo = (memoTitle) => {
     }
 }
 
+export const addMemoNotifications = (memoNotification) => {
+    return {
+        type: 'ADD_MEMO_NOTIFICATIONS',
+        payload: memoNotification
+    }
+}
+
+export const wipeMemoNotifications = () => {
+    return {
+        type: 'WIPE_MEMO_NOTIFICATIONS'
+    }
+}

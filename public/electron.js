@@ -14,13 +14,13 @@ function createWindow() {
   mainWindow = new BrowserWindow({
     width: 820,
     height: 680,
-    icon: '../public/icon.ico',
+    icon: './icon.ico',
     minWidth: 380,
     minHeight: 380,
     webPreferences: {
       backgroundThrottling: false,
       contextIsolation: false,
-      preload: __dirname + '\\electron-preload.js'
+      preload:  path.join(__dirname , 'electron-preload.js')
     }
   });
   mainWindow.loadURL(
@@ -47,7 +47,6 @@ app.on("activate", () => {
 
 ipcMain.on('notify', (event, arg) => {
   sendNotification(arg.title, arg.body)
-  mainWindow.webContents.send("fromMain", 'response');
 })
 
 function sendNotification(title, body) {

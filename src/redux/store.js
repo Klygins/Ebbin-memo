@@ -7,7 +7,8 @@ import allReducers from './reducers'
 const persistConfig = { // configuration object for redux-persist
     key: 'root',
     storage, // define which storage to use
-    //blacklist: ['navigation'] // navigation will not be persisted
+    blacklist: ['memosNotifications']
+    // blacklist: ['navigation'] // navigation will not be persisted
     //whitelist: ['navigation'] // only navigation will be persisted
 }
 

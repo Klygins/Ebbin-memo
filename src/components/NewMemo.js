@@ -10,7 +10,7 @@ const NewMemo = (props) => {
 
     const handleCreation = () => {
         if (memoTitle !== '') {
-            props.addNewMemo( {title: memoTitle, date: new Date() } )
+            props.addNewMemo( {title: memoTitle, date: new Date().valueOf() } )
             setTitle('')
         }
     }

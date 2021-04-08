@@ -14,10 +14,21 @@ const memos = (state = [], action) => {
     }
 }
 
+const memosNotifications = (state = [], action) => {
+    switch (action.type) {
+        case 'ADD_MEMO_NOTIFICATIONS':
+            return [...state, action.payload]
+        case 'WIPE_MEMO_NOTIFICATIONS':
+            return []
+        default: 
+            return state
+    }
+}
+
 // Combining them
 const allReducers = combineReducers({
-    memos: memos,
-    // removingMemo,
+    memos,
+    memosNotifications
 })
 
 // Exporting reducers

@@ -4,6 +4,7 @@
   "repository": "https://github.com/farawayCC/Ebbin-memo.git",
   "author": "farawayCC <iosdevfarconsoft@gmail.com>",
   "license": "MIT",
+  "description": "Ebbinghaus Memo app for storing plain text for repetitions at regular intervals to achieve increadible levels of assimilation of new knowledge",
   "main": "public/electron.js",
   "homepage": "./",
   "dependencies": {
