@@ -12,8 +12,8 @@ let mainWindow;
 
 function createWindow() {
   mainWindow = new BrowserWindow({
-    width: 820,
-    height: 680,
+    width: 620,
+    height: 440,
     icon: './icon.ico',
     minWidth: 380,
     minHeight: 380,
@@ -29,6 +29,8 @@ function createWindow() {
       : `file://${path.join(__dirname, "../build/index.html")}`
   );
   mainWindow.on("closed", () => (mainWindow = null));
+
+  mainWindow.setMenu(null)
 }
 
 app.on("ready", createWindow);

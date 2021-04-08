@@ -9,7 +9,7 @@ import { wipeMemoNotifications } from '../redux/actions'
 
 const MemoList = (props) => {
 
-    //memosNotifications is an array of notification objects = { title, startTime, [timerId] } 
+    // memosNotifications is an array of notification objects = { title, startTime, [timerId] } 
 
     useEffect(() => {
         const memosNotifs = props.memosNotifications
@@ -49,17 +49,6 @@ const MemoList = (props) => {
 
     const setTimeouts = (startTime, title) => {
         const timerIds = []
-        // const timeouts = [
-        //     // 5 * 1000, //test: 5 sec
-        //     // 20 * 1000, //test
-        //     1000 * 600,             // 10 minutes
-        //     1000 * 3600,            // 1 hour
-        //     1000 * 3600 * 5,        // 5 hours
-        //     1000 * 3600 * 24,       // 1 day
-        //     1000 * 3600 * 24 * 5,   // 5 day
-        //     1000 * 3600 * 24 * 25,   // 25 day
-        //     1000 * 3600 * 24 * 30 * 4,  // 4 month
-        // ]
         const timeouts = [
             { time: 1000 * 600, text: '10 min' },
             { time: 1000 * 3600, text: '1 hour' },
