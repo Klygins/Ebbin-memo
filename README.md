@@ -1,7 +1,14 @@
-# Ebbin-memo
-Ebbinghaus Memo app for storing plain text for repetitions at regular intervals to achieve increadible levels of assimilation of new knowledge
+# Ebbinghaus Memo app
+It is a small and easy-to-use utility based on a theory of forgetting curves. 
 
-## Todo:
+## How to 
+1. Write what you want to remember, hit 'Create', and minimize the app. 
+2. It will notify you when you need to recall this knowledge. 
+3. During 7 repetitions (the last one is after 4 months) you will remember what was saved at nearly 80% of the first capacity
+
+[Learn more on wiki](https://en.wikipedia.org/wiki/Forgetting_curve)
+
+## Project Todos:
 - [X] Remove Menu Bar
-- [ ] Make frameless + remove standart (-) Minimize, ([]) Maximize and (X) Close buttons
-- [ ] Make it as a status tray application: don't close at close command, but hide in tray. Show on click
+- [ ] Make frameless + remove standard buttons: (-) Minimize, ([]) Maximize and (X) Close 
+- [ ] Make it as a status tray application: don't close at close command, but hide in the tray. Show on click
