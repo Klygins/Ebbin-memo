@@ -3,24 +3,27 @@ const {
   app,
   BrowserWindow,
   ipcMain,
-  Notification
+  Notification,
+  Tray,
+  Menu
 } = electron;
 
 const path = require("path");
 const isDev = require("electron-is-dev");
 let mainWindow;
+let tray;
 
 function createWindow() {
   mainWindow = new BrowserWindow({
     width: 620,
-    height: 440,
+    height: 460,
     icon: './icon.ico',
     minWidth: 380,
     minHeight: 380,
     webPreferences: {
       backgroundThrottling: false,
       contextIsolation: false,
-      preload:  path.join(__dirname , 'electron-preload.js')
+      preload: path.join(__dirname, 'electron-preload.js')
     }
   });
   mainWindow.loadURL(
@@ -28,9 +31,22 @@ function createWindow() {
       ? "http://localhost:3000"
       : `file://${path.join(__dirname, "../build/index.html")}`
   );
-  mainWindow.on("closed", () => (mainWindow = null));
 
   mainWindow.setMenu(null)
+
+  mainWindow.on('minimize', function (event) {
+    event.preventDefault();
+    mainWindow.hide();
+    tray = createTray();
+  });
+
+  mainWindow.on('restore', function (event) {
+    mainWindow.show();
+    tray.destroy();
+  });
+
+
+  return mainWindow
 }
 
 app.on("ready", createWindow);
@@ -55,4 +71,30 @@ function sendNotification(title, body) {
   new Notification({
     title, body
   }).show();
+}
+
+
+function createTray() {
+  let appIconTray = new Tray(path.join(__dirname, "../src/assets/tray.png"));
+  const contextMenu = Menu.buildFromTemplate([
+    {
+      label: 'Show', click: function () {
+        mainWindow.show();
+      }
+    },
+    {
+      label: 'Exit', click: function () {
+        app.isQuiting = true;
+        app.quit();
+      }
+    }
+  ]);
+
+  appIconTray.on('click', (event) => {
+    mainWindow.show();
+  })
+
+  appIconTray.setToolTip('Open Ebbin Memo');
+  appIconTray.setContextMenu(contextMenu);
+  return appIconTray;
 }
