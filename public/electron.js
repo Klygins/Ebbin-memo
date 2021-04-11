@@ -75,7 +75,8 @@ function sendNotification(title, body) {
 
 
 function createTray() {
-  let appIconTray = new Tray(path.join(__dirname, "../src/assets/tray.png"));
+  let appIconTray = new Tray(path.join(__dirname,'images','tray.png'));
+  
   const contextMenu = Menu.buildFromTemplate([
     {
       label: 'Show', click: function () {
