@@ -45,6 +45,8 @@ function createWindow() {
     tray.destroy();
   });
 
+  if (isDev)
+    mainWindow.webContents.openDevTools()
 
   return mainWindow
 }
@@ -68,15 +70,14 @@ ipcMain.on('notify', (event, arg) => {
 })
 
 function sendNotification(title, body) {
-  new Notification({
-    title, body
-  }).show();
+  const notif = new Notification({ title, body });
+  notif.show();
 }
 
 
 function createTray() {
-  let appIconTray = new Tray(path.join(__dirname,'images','tray.png'));
-  
+  let appIconTray = new Tray(path.join(__dirname, 'images', 'tray.png'));
+
   const contextMenu = Menu.buildFromTemplate([
     {
       label: 'Show', click: function () {
