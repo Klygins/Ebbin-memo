@@ -35,17 +35,17 @@
     "build": "yarn react-build && yarn electron-build",
     "start": "concurrently \"cross-env BROWSER=none yarn react-start\" \"wait-on http://localhost:3000 && electron .\""
   },
-  "icon": "./src/icon.png",
+  "icon": "./public/icon.png",
   "build": {
     "appId": "com.example.EbbinMemo",
     "productName": "EbbinMemo",
     "copyright": "Copyright © 2021 ${author}",
     "mac": {
-      "icon": "./src/icon.png",
+      "icon": "./public/icon.png",
       "category": "public.app-category.productivity"
     },
     "win": {
-      "icon": "./src/icon.png"
+      "icon": "./public/icon.png"
     },
     "files": [
       "./src/*"
