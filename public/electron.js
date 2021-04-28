@@ -53,6 +53,8 @@ function createWindow() {
   return mainWindow
 }
 
+app.setAppUserModelId("Ebbin Memo")
+
 app.on("ready", createWindow);
 
 app.on("window-all-closed", () => {
