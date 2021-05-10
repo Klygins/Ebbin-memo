@@ -13,3 +13,4 @@ It is a small and easy-to-use utility based on a theory of forgetting curves.
 - [X] Make it as a status tray application: don't close at close command, but hide in the tray. Show on click
 - [ ] Ensure that Memo was recalled (in case of computer restart)
 - [ ] Sound on alarm
+- [ ] Deferred notifications (checkbox)
