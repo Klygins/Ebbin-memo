@@ -29,3 +29,26 @@ body {
   overflow: auto;
   padding: 20px;
 }
+
+.notification-checkbox{
+  padding-left: 50px;
+  padding-right: 50px;
+}
+
+.notification-checkbox-text{
+  font-size: 15px;
+}
+.memo-list-notification{
+  height: 80vh;
+  overflow: auto;
+  padding: 20px;
+}
+.memo-notification{
+  margin-bottom: 4vh;
+  font-size: 15px;
+}
+
+.close-modal-button{
+  text-align: center;
+  margin-bottom: 20px;
+}
