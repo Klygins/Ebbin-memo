@@ -1,19 +1,28 @@
-import React, { Component } from 'react';
-import NewMemo from './components/NewMemo'
-import MemoList from './components/MemoList'
-import NotificationCheckBox from './components/NotificationCheckBox'
+import React from 'react';
+import {
+    HashRouter as Router,
+    Switch,
+    Route
+} from "react-router-dom";
 
-class App extends Component {
+import config from './config';
+import Home from './pages/Home'
+import Header from './components/Header';
+import Footer from './components/Footer'
 
-  render() {
+
+const App = () => {
     return (
-      <div className='App'>
-        <NewMemo />
-        <NotificationCheckBox />
-        <MemoList />
-      </div>
-    );
-  }
+        <div style={{backgroundColor: 'rgb(249, 250, 253)'}}>
+        <Router>
+            <Header />
+            <Switch>
+                <Route exact path={config.pages.home} component={Home} />
+            </Switch>
+            <Footer />
+        </Router>
+        </div>
+    )
 }
 
 export default App;
