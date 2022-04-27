@@ -1,7 +1,6 @@
 import { calculateNextShowTime } from "./_utils"
 
-export async function addNewMemo(db, memoText, startShowAt = new Date(), haveDelay,
-    tags = ['default'], folder = 'default') {
+export async function addNewMemo(db, memoText, startShowAt, tags, folder) {
     return await new Promise((resolve, reject) => {
         let transaction = db.transaction('memos', 'readwrite')
         let now = new Date().getTime()

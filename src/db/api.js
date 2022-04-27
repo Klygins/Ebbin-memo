@@ -28,9 +28,14 @@ export function searchNotCheckedMemos(callback) {
  * @param {string} text memo text
  * @param {Function} callback (err, idOfCreatedMemo)
  * @param {int} startShowAt date.getTime(), not required, all chain of showing
+ * @param {string[]} tags array of tags
+ * @param {folder} folder name of folder
  * will start after that time. Must be 10 sec later
  */
-export function addNewMemo(text, callback, startShowAt = false) {
+export function addNewMemo(
+    text, callback, startShowAt = new Date().getTime(),
+    tags = ['default'], folder = 'default'
+) {
     if (typeof startShowAt !== 'number')
         return callback('startShowAt must be integer')
     if (typeof text !== 'string')
@@ -41,7 +46,7 @@ export function addNewMemo(text, callback, startShowAt = false) {
 
     openRequest.onsuccess = function () {
         let db = openRequest.result
-        controllers.addNewMemo(db, text, startShowAt)
+        controllers.addNewMemo(db, text, startShowAt, tags, folder)
             .then(res => callback(false, res))
             .catch(err => callback(err, false))
     }

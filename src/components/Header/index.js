@@ -49,7 +49,7 @@ const Header = () => {
         addNewMemo(memoText, (err, res) => {
             console.log(err, res);
             console.timeEnd('add memo')
-        }, new Date().getTime())
+        }, undefined, ['tag1', 'tag2'], 'my memos')
     }
 
     return (
@@ -68,18 +68,15 @@ const Header = () => {
                     } />
                 <div style={{ flexGrow: '4' }} />
                 <Buttons>
-                    <Link to={config.pages.memoList}>
-                        <MUIButton variant="text" style={{ color: 'black', marginRight: '15px' }}>
-                            Memo list
-                        </MUIButton>
-                    </Link>
-                    <Link to={config.pages.newMemo}>
-                        <MUIButton variant="text" style={{ color: 'black' }}>
-                            New memo
-                        </MUIButton>
-                    </Link>
-                    {/* <HeaderButton>Memo list</HeaderButton>
-                    <HeaderButton>New memo</HeaderButton> */}
+                    <Button.Group>
+                        <Link to={config.pages.memoList}>
+                            <Button color='yellow'>New Memo</Button>
+                        </Link>
+                        <Button.Or text='/' />
+                        <Link to={config.pages.newMemo}>
+                            <Button color='yellow'>Memo List</Button>
+                        </Link>
+                    </Button.Group>
                 </Buttons>
             </HeaderWrapper>
             <div style={onloadStyle}></div>
