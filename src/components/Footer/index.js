@@ -8,6 +8,7 @@ const FooterWrapper = styled.div`
     color: white;
 `
 
+//TODO: Add info about next alert + maybe some statistic 
 const Footer = () => (
     <FooterWrapper>footer</FooterWrapper>
 )
