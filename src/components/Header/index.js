@@ -9,6 +9,7 @@ import { Button as MUIButton } from '@mui/material'
 import icon from '../../assets/tray@2x.png'
 import { Link } from "react-router-dom";
 import config from "../../config";
+import { addNewMemo } from "../../db/api";
 
 
 const HeaderWrapper = styled.div`
@@ -37,10 +38,19 @@ const Buttons = styled.div`
 
 const Header = () => {
     const [onloadStyle, setStyle] = useState({})
+    const [memoText, setMemoText] = useState('')
 
     useEffect(() => {
         setStyle({ height: document.getElementById('header').offsetHeight })
     }, [])
+
+    function addMemo() {
+        console.time('add memo')
+        addNewMemo(memoText, (err, res) => {
+            console.log(err, res);
+            console.timeEnd('add memo')
+        }, new Date().getTime())
+    }
 
     return (
         <>
@@ -50,8 +60,11 @@ const Header = () => {
                 </Link>
                 <Input
                     placeholder={'Der Abend - evening'}
+                    value={memoText}
+                    onChange={(e) => setMemoText(e.target.value)}
                     action={
-                        <Button color='green'>Add memo</Button>
+                        <Button onClick={addMemo}
+                            color='green'>Add memo</Button>
                     } />
                 <div style={{ flexGrow: '4' }} />
                 <Buttons>

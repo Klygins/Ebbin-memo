@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from 'styled-components'
 import {
     Chart as ChartJS,
@@ -12,6 +12,7 @@ import {
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import { Header } from "semantic-ui-react";
+import { searchNotCheckedMemos } from "../../db/api";
 
 
 ChartJS.register(
@@ -43,7 +44,7 @@ const displayDate = (date = new Date()) =>
 const now = new Date()
 const labels = [
     // displayDate(new Date(new Date().setDate(now.getDate()-6))),
-    displayDate(new Date(new Date().setDate(now.getDate()-5))),
+    displayDate(new Date(new Date().setDate(now.getDate() - 5))),
     displayDate(new Date(new Date().setDate(now.getDate() - 4))),
     displayDate(new Date(new Date().setDate(now.getDate() - 3))),
     displayDate(new Date(new Date().setDate(now.getDate() - 2))),
@@ -77,8 +78,8 @@ const Home = () => {
         <Wrapper>
             <div style={{ width: '50%' }}>
                 <Header
-                as={'h2'}
-                    style={{marginLeft: '1.5em'}}
+                    as={'h2'}
+                    style={{ marginLeft: '1.5em' }}
                     content={
                         <p>On that month <u>42</u> memos were created</p>
                     } />

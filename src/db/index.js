@@ -1,8 +1,4 @@
-import { addNewMemo } from './controllers'
-
-
 export function initdb() {
-
     let openRequest = indexedDB.open("memos", 1)
 
     openRequest.onupgradeneeded = function (event) {
@@ -12,18 +8,17 @@ export function initdb() {
 
         if (!db.objectStoreNames.contains("memos")) {
             let memos = db.createObjectStore("memos", { keyPath: "id" })
-            memos.createIndex('created_index', 'createdAt')
+            memos.createIndex('time_index', 'timeNextShow')
             memos.createIndex('folder_index', 'folder')
         }
         else {
             let memos = txn.objectStore('memos')
-            memos.createIndex('created_index', 'createdAt')
+            memos.createIndex('time_index', 'timeNextShow')
             memos.createIndex('folder_index', 'folder')
         }
     }
 
-    openRequest.onsuccess = function () {
+    openRequest.onsuccess = async function () {
         console.log('opened db');
-        let db = openRequest.result
     }
 }

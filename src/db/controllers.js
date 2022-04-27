@@ -1,48 +1,79 @@
+import { calculateNextShowTime } from "./_utils"
 
-/**
- * @param {*} memoText 
- * @param {*} showlist example: 
- * {
- *      firstShow: 1649578673837, // apr 10, 15:18 (+7)
- *      secondShow: 1649579273837, // after 10 min
- *      thirdShow: 1649582273837, // hour
- *      fourthShow: 1649596673837, // 5 hours
- *      fifthShow: 1649665073837, // day
- *      sixthShow: 1650010673837, // 25 days
- *      seventhShow: 1659946673837, // 4 month
- *      eighthShow: 1691050673837, // 16 month
- * }
- */
-export function addNewMemo(db, memoText, showlist, callback, tags = ['default'], folder = 'default') {
-    let transaction = db.transaction('memos', 'readwrite')
+export async function addNewMemo(db, memoText, startShowAt = new Date(), haveDelay,
+    tags = ['default'], folder = 'default') {
+    return await new Promise((resolve, reject) => {
+        let transaction = db.transaction('memos', 'readwrite')
+        let now = new Date().getTime()
 
-    let memos = transaction.objectStore('memos')
+        let memos = transaction.objectStore('memos')
 
-    let lastid = +localStorage.getItem('last_id')
+        let lastid = +localStorage.getItem('last_id')
 
-    const newMemo = {
-        id: lastid + 1,
-        text: memoText,
-        firstShow: showlist[0],
-        secondShow: showlist[0],
-        thindShow: showlist[0],
-        fifthShow: showlist[0],
-        firstShow: showlist[0],
-        firstShow: showlist[0],
-        firstShow: showlist[0],
-        firstShow: showlist[0],
-        tags,
-        folder,
-        createdAt: new Date().getTime()
-    }
+        let delay = startShowAt - new Date()
+        if (delay < 10000) delay = 0
 
-    let request = memos.add(newMemo)
+        const newMemo = {
+            id: lastid + 1,
+            text: memoText,
+            tags,
+            folder,
+            startTime: now,
+            countShows: delay === 0 ? 1 : 0,
+            timeNextShow: delay === 0
+                ? now + 1000 * 60 * 10
+                : now + delay
+        }
 
-    request.onsuccess = function () {
-        localStorage.setItem('last_id', lastid + 1)
-        callback(false, lastid)
-    }
-    request.onerror = function () {
-        callback('error creating new memo', false)
-    }
+        let request = memos.add(newMemo)
+
+        request.onsuccess = function () {
+            localStorage.setItem('last_id', lastid + 1)
+            resolve(lastid)
+        }
+        request.onerror = function (e) {
+            reject('error creating new memo', e)
+        }
+    })
+}
+
+
+export async function searchUnresolvedMemos(db) {
+    return await new Promise((resolve, reject) => {
+        const from = 1587369876116 // apr 2020
+        const to = new Date().getTime()
+
+        let transaction = db.transaction('memos')
+        let memos = transaction.objectStore('memos')
+        let timeShowIndex = memos.index('time_index')
+
+        let request = timeShowIndex.getAll(IDBKeyRange.bound(from, to))
+
+        request.onsuccess = function () {
+            resolve(request.result)
+        }
+        request.onerror = function (e) {
+            reject('error searching book in db', e)
+        }
+    })
+}
+
+export async function handleMemoRepeated(db, memoId) {
+    return await new Promise((resolve, reject) => {
+        let transaction = db.transaction("memos", "readwrite");
+        let memos = transaction.objectStore('memos')
+
+        let request = memos.get(IDBKeyRange.only(memoId))
+
+        request.onsuccess = function () {
+            const memo = request.result
+            memo.timeNextShow = calculateNextShowTime(memo.startTime, memo.countShows)
+            memo.countShows = memo.countShows + 1
+            memos.put(memo)
+            resolve(true)
+        }
+        request.onerror = function (e) {
+            reject('error searching book in db', e)
+        }
+    })
 }
