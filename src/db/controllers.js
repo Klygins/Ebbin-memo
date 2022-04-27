@@ -1,4 +1,4 @@
-import { calculateNextShowTime } from "./_utils"
+import { calculateNextShowTime, compareWithTagsAndFolder } from "./_utils"
 
 export async function addNewMemo(db, memoText, startShowAt, tags, folder) {
     return await new Promise((resolve, reject) => {
@@ -52,7 +52,7 @@ export async function searchUnresolvedMemos(db) {
             resolve(request.result)
         }
         request.onerror = function (e) {
-            reject('error searching book in db', e)
+            reject('error searching unresolved memos in db', e)
         }
     })
 }
@@ -72,7 +72,28 @@ export async function handleMemoRepeated(db, memoId) {
             resolve(true)
         }
         request.onerror = function (e) {
-            reject('error searching book in db', e)
+            reject('error memo handle repeated', e)
+        }
+    })
+}
+
+export async function searchMemo(db, from, to, tags, folder) {
+    return await new Promise((resolve, reject) => {
+        if (!from) from = 0
+        if (!to) to = 3691082609569
+        let transaction = db.transaction("memos");
+        let memos = transaction.objectStore('memos')
+        let timeShowIndex = memos.index('time_index')
+
+        let request = timeShowIndex.getAll(IDBKeyRange.bound(from, to))
+
+        request.onsuccess = function () {
+            console.log('From to result: ',request.result);
+            const memos = compareWithTagsAndFolder(request.result, tags, folder)
+            resolve(memos)
+        }
+        request.onerror = function (e) {
+            reject('error searching memo in db', e)
         }
     })
 }

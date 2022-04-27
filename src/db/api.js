@@ -66,3 +66,22 @@ export function markMemoRepeated(memoId, callback = (err, res) => { }) {
             .catch(err => callback(err, false))
     }
 }
+
+/**
+ * search: all memos {from, to} AND folder AND (memo tags contain any of given tags)
+ * @param {*} from date.getTime() if not provided will use minimum
+ * @param {*} to date.getTime() if not provided will use maximum
+ * @param {*} tags Search by OR
+ * @param {*} folder if no matter send undefined
+ * @param {*} callback (err, memo_list)
+ */
+export function searchMemo(from, to, tags = [], folder, callback) {
+    let openRequest = indexedDB.open("memos", 1)
+
+    openRequest.onsuccess = function () {
+        let db = openRequest.result
+        controllers.searchMemo(db, from, to, tags, folder)
+            .then(res => callback(false, res))
+            .catch(err => callback(err, false))
+    }
+}

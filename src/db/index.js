@@ -9,12 +9,10 @@ export function initdb() {
         if (!db.objectStoreNames.contains("memos")) {
             let memos = db.createObjectStore("memos", { keyPath: "id" })
             memos.createIndex('time_index', 'timeNextShow')
-            memos.createIndex('folder_index', 'folder')
         }
         else {
             let memos = txn.objectStore('memos')
             memos.createIndex('time_index', 'timeNextShow')
-            memos.createIndex('folder_index', 'folder')
         }
     }
 
