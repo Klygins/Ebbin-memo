@@ -1,5 +1,18 @@
 import * as controllers from "./controllers"
 
+/**
+ * Search for not repeated memos, second callback argument is array of objects:
+ * {
+ *  countShows: number,
+ *  folder: string,
+ *  id: number,
+ *  startTime: number,
+ *  tags: string[],
+ *  text: string,
+ *  timeNextShow: number
+ * }
+ * @param {Function} callback (err, memo_list)
+ */
 export function searchNotCheckedMemos(callback) {
     let openRequest = indexedDB.open("memos", 1)
 
@@ -12,10 +25,10 @@ export function searchNotCheckedMemos(callback) {
 }
 
 /**
- * 
  * @param {string} text memo text
- * @param {Function} callback (err, response)
- * @param {int} startShowAt 
+ * @param {Function} callback (err, idOfCreatedMemo)
+ * @param {int} startShowAt date.getTime(), not required, all chain of showing
+ * will start after that time. Must be 10 sec later
  */
 export function addNewMemo(text, callback, startShowAt = false) {
     if (typeof startShowAt !== 'number')
@@ -34,6 +47,10 @@ export function addNewMemo(text, callback, startShowAt = false) {
     }
 }
 
+/**
+ * Should be called after repeating memo
+ * @param {int} memoId id of memo in db
+ */
 export function markMemoRepeated(memoId, callback = (err, res) => { }) {
     let openRequest = indexedDB.open("memos", 1)
 
