@@ -8,6 +8,9 @@ It is a small and easy-to-use utility based on a theory of forgetting curves.
 
 [Learn more on wiki](https://en.wikipedia.org/wiki/Forgetting_curve)
 
+# Workflow
+## Creating new memo
+
 ## Project Todos:
 - [X] Remove Menu Bar
 - [X] Make it as a status tray application: don't close at close command, but hide in the tray. Show on click

@@ -1,0 +1,16 @@
+import React from "react";
+import styled from "styled-components";
+
+
+const FooterWrapper = styled.div`
+    width: 100vw;
+    background-color: grey;
+    color: white;
+`
+
+//TODO: Add info about next alert + maybe some statistic 
+const Footer = () => (
+    <FooterWrapper>footer</FooterWrapper>
+)
+
+export default Footer
